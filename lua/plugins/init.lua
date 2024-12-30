@@ -227,6 +227,27 @@ local default_plugins = {
       end
     end,
   },
+  -- Harpoon
+  {
+  "theprimeagen/harpoon",
+  branch = "harpoon2",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  config = function()
+    -- Initialize Harpoon
+    local harpoon = require("harpoon")
+    harpoon.setup()
+  end,
+  keys = {
+    { "<leader>a", function() require("harpoon").add_file() end, desc = "Harpoon file" },
+    { "<C-e>", function() require("harpoon.ui").toggle_quick_menu() end, desc = "Harpoon quick menu" },
+    { "<C-h>", function() require("harpoon.ui").nav_file(1) end, desc = "Harpoon to file 1" },
+    { "<C-t>", function() require("harpoon.ui").nav_file(2) end, desc = "Harpoon to file 2" },
+    { "<C-n>", function() require("harpoon.ui").nav_file(3) end, desc = "Harpoon to file 3" },
+    { "<C-s>", function() require("harpoon.ui").nav_file(4) end, desc = "Harpoon to file 4" },
+  },
+},
+
+
 
   -- Only load whichkey after all the gui
   {
@@ -250,3 +271,10 @@ if #config.plugins > 0 then
 end
 
 require("lazy").setup(default_plugins, config.lazy_nvim)
+return {
+  plugins = {
+    user = function()
+      return require "custom.plugins"
+    end,
+  },
+}

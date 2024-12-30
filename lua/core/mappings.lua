@@ -264,7 +264,6 @@ M.nvimtree = {
     ["<leader>e"] = { "<cmd> NvimTreeFocus <CR>", "Focus nvimtree" },
   },
 }
-
 M.telescope = {
   plugin = true,
 
@@ -288,7 +287,22 @@ M.telescope = {
     -- theme switcher
     ["<leader>th"] = { "<cmd> Telescope themes <CR>", "Nvchad themes" },
 
-    ["<leader>ma"] = { "<cmd> Telescope marks <CR>", "telescope bookmarks" },
+    ["<leader>ma"] = { "<cmd> Telescope marks <CR>", "Telescope bookmarks" },
+
+    -- custom keybind
+    ["<C-p>"] = {
+      function()
+        local current_buf = vim.api.nvim_get_current_buf()
+        local buf_ft = vim.bo[current_buf].filetype
+
+        if buf_ft == "TelescopePrompt" then
+          vim.cmd("stopinsert | quit") -- Close Telescope
+        else
+          vim.cmd("Telescope find_files") -- Open Telescope
+        end
+      end,
+      "Toggle Telescope (Ctrl+P)"
+    },
   },
 }
 
@@ -463,6 +477,8 @@ M.gitsigns = {
       "Toggle deleted",
     },
   },
+
+
 }
 
 return M
